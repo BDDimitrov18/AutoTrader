@@ -13,7 +13,7 @@ client.on('ready', async () =>{
 });
 
 client.on('messageCreate', async(message) =>{
-  if (message.channel.id === "") {
+  if (message.channel.id === "1128001555161940068") {
     findTemplate(message.content, message.author.nickname);
   }
 });
