@@ -1,6 +1,6 @@
 const { forEach, replace } = require("lodash");
 const templates = [ 
-` FUTURES (BINANCE) 
+` FUTURES \\(BINANCE\\) 
 
 #{pair}
 
@@ -47,11 +47,6 @@ message = await escapeEmoji(message);
     let newTemp = '';
     newTemp += template;
     regex = new RegExp(newTemp.replace(/\{.*?\}/gm, '(.*)'));
-    console.log(message);
-    console.log();
-    console.log('-----------------------------------------------------------------------')
-    console.log();
-    console.log(regex.source);
     match = message.match(regex);
     if (match) {
       matchedTemplate = template;
