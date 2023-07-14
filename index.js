@@ -22,9 +22,6 @@ client.on('ready', async () =>{
 });
 
 
-
-// Replace 'WEBHOOK_ID' and 'WEBHOOK_TOKEN' with your actual webhook ID and token
-const webhookClient = new WebhookClient('1129000747095294062', '3LHAm16KrkaYAoCCkIqWLebn601xOAPsOJ9W8P564TLedxNi5z2DuxURPCdZVkDhYGT7');
 const intervalTime = 5000;
 const interval =  setInterval(async () => {
   for(const order of OrdersRunning){
@@ -49,8 +46,11 @@ const interval =  setInterval(async () => {
 
 client.on('messageCreate', async(message) =>{
   if (message.channel.id === "1129000013943537664") {
+    const channel = client.channels.cache.get('1129000013943537664');
+    let chWebhooks = await channel.fetchWebhooks();
+    let webhook = chWebhooks.first();
     if(message.content === '!TriggerSignalTest : 1'){
-      webhookClient.send(`📊 FUTURES (BINANCE) 
+      webhook.send(`📊 FUTURES (BINANCE) 
 
       #ETHUSDT
       
@@ -69,7 +69,7 @@ client.on('messageCreate', async(message) =>{
       Stop Loss : - 1865.0`);
     }
     if(message.content === '!TriggerSignalTest : 2'){
-      webhookClient.send(`ETH/USDT SHORT 🛑
+      webhook.send(`ETH/USDT SHORT 🛑
       Leverage 20x
       Entries  1882.2
       Target 1 1880.0
@@ -81,7 +81,11 @@ client.on('messageCreate', async(message) =>{
       SL 1900.0`);
     }
     const tradeOptions = await findTemplate(message.content, message.author.nickname);
+    console.log(message.content);
+    if(tradeOptions){
+      console.log(tradeOptions);
     await executeTrade(tradeOptions,binance,1,OrdersRunning);
+    }
   }
 
 });
